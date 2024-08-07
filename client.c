@@ -1,43 +1,64 @@
 #include "minitalk.h"
 
-void send_signal(int pid, char c)
+void ack_handler(int signal)
 {
-    int bits;
+    (void)signal;
+}
 
-    bits = 0;
-    while (bits < 8)
+//need kill() < 0 checker?
+void send_char(int pid, char c)
+{
+    int bit;
+
+    bit = 7;
+    while (bit >= 0)
     {
-        if ((c & (0x01 << bits)) != 0)
+        if (((c >> bit) & 1) == 1)
             kill(pid, SIGUSR1);
         else
             kill(pid, SIGUSR2);
-        usleep(500);
-        bits++;
+        pause();
+        bit--;
     }
+}
+
+void send_message(int pid, char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != '\0')
+    {
+        send_char(pid, str[i]);
+        i++;
+    }
+    send_char(pid, '\n');
 }
 
 int main(int argc, char **argv)
 {
     int pid;
-    int i;
+    struct sigaction sa_client;
 
-    i = 0;
-    //check argc
     if (argc != 3)
     {
-        ft_printf("Wrong For00mat.\n");
+        ft_printf("Error: Wrong For00mat.\n");
         ft_printf("Enter: ./client <PID> <string>\n");
-        return (0);
+        return (1);
     }
-    else
+    pid = ft_atoi(argv[1]);
+    if (kill(pid, 0) < 0)
     {
-        pid = ft_atoi(argv[1]);
-        while (argv[2][i] != '\0')
-        {
-            send_signal(pid, argv[2][i]);
-            i++;
-        }
-        send_signal(pid, '\n');
+        ft_printf("Error: Invalid PID.\n");
+		return (1);
     }
+
+    sigemptyset(&sa_client.sa_mask);
+    sa_client.sa_flags = SA_RESTART;
+    sa_client.sa_handler = ack_handler;
+    //need sigaction() < 0 checker?
+    sigaction(SIGUSR1, &sa_client, NULL);
+    sigaction(SIGUSR2, &sa_client, NULL);
+    send_message(pid, argv[2]);
     return (0);
 }
