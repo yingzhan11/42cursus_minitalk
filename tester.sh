@@ -1,36 +1,71 @@
 !/bin/zsh
 
 PATH_TO_CLIENT="./client"
-pid=$1
+
+
+###################
+# Preparing tests #
+###################
+
+for init in t1 t2 t3 t4 pid
+do
+	export $init=0
+done
+
+for i in $@
+do
+	case $i in
+		"-1") t1=1;;
+		"-2") t2=1;;
+		"-3") t3=1;;
+		"-4") t4=1;;
+		*) if [[ $pid = 0 ]] ; then pid=$i; else echo "[ERROR] Please enter correct arg when launching."; exit; fi;;
+	esac
+done
+
 
 ###########
 # Testing #
 ###########
 
 ### Test 1 ###
-echo "[Test 1] Basic test"
-$PATH_TO_CLIENT $pid "Test 1: Hello, this is a first test" 
+if [[ $t1 == 1 ]]
+then
+	echo "[Test 1] Basic test"
+	$PATH_TO_CLIENT $pid "Test 1: Hello, this is a first test" 
+fi
 
 ### Test 2 ###
-echo "[Test 2] Empty string"
-$PATH_TO_CLIENT $pid ""
+if [[ $t1 == 1 ]]
+then
+	echo "[Test 2] Empty string"
+	$PATH_TO_CLIENT $pid ""
+fi
 
 ### Test 3 ###
-echo "[Test 3] Number string"
-$PATH_TO_CLIENT $pid "Test 3: 12345678901234567890123456789012345678901234567890"
+if [[ $t1 == 1 ]]
+then
+	echo "[Test 3] Number string"
+	$PATH_TO_CLIENT $pid "Test 3: 12345678901234567890123456789012345678901234567890"
+fi
 
 ### Test 4 ###
-echo "[Test 4] Emojis"
-$PATH_TO_CLIENT $pid "
+if [[ $t1 == 1 ]]
+then
+	echo "[Test 4] Emojis"
+	$PATH_TO_CLIENT $pid "
 Test 4:
 ⛴️ + 🌊 + 💥 = ❓
 👦 + 👽 + 🚲 = ❓
 🏰 + ❄️ + 👭 = ❓
 " 
+fi
 
 ### Test 5 ###
-echo "[Test 5] Speed test: Time to print 1 000 dot"
-time $PATH_TO_CLIENT $pid "
+if [[ $t2 == 1 ]]
+then
+	echo "[Test 5] Speed test: Time to print 1 000 dot"
+	time $PATH_TO_CLIENT $pid "
 Test 5:
 ...................................................................................................
 ...................................................................................................
@@ -43,10 +78,13 @@ Test 5:
 ...................................................................................................
 ...................................................................................................
 "
+fi
 
 ### Test 6 ###
-echo "[Test 6] Speed test: Time to print 3 000 char"
-time $PATH_TO_CLIENT $pid "
+if [[ $t3 == 1 ]]
+then
+	echo "[Test 6] Speed test: Time to print 3 000 char"
+	time $PATH_TO_CLIENT $pid "
 Test 6:
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mattis ullamcorper venenatis.
 Curabitur auctor lectus sed ligula vehicula, eget blandit mauris commodo. Aliquam tempor pellentesque
@@ -88,10 +126,13 @@ ornare odio. Mauris laoreet urna vestibulum porta tempus. Proin pharetra purus e
 aliquet ut. Aenean sed arcu nec lorem feugiat consequat. Nam congue ultrices porttitor. Vivamus pulvinar
 ante ac magna fringilla sodales. Praesent molestie justo dui, eu hendrerit nisi eleifend sed.
 "
+fi
 
 ### Test 7 ###
-echo "[Test 7] Crash test: Sending big str with 20 000 char"
-$PATH_TO_CLIENT $pid "
+if [[ $t4 == 1 ]]
+then
+	echo "[Test 7] Crash test: Sending big str with 20 000 char"
+	$PATH_TO_CLIENT $pid "
 Test 7:
                                                LL             A
                                                LL            A A
@@ -254,14 +295,17 @@ TTTTTTTT  OOOOOOOOO  UU     UU  RRRRRRRR             EEEEEEEEE  IIIIIIIIII  FFFF
   +            \` *  - '      +                                                       +      \` -  * '            +
  -----------------------------------------------------------------------------------------------------------------                        
 "
+fi
 
-### Test 8 ###
-echo "[Test 8] Crash test: Sending str with 3 000 char for 10 times"
-for i in {1..10}
-do
-    echo -n "[${i}]"
-    $PATH_TO_CLIENT $pid "
-    Test 8 [${i}]:
+### Test 4 ###
+if [[ $t4 == 1 ]]
+then
+	echo "${L_Green}\n [Test 4]\tTrying to crash your exhange Server-Client, sending str with 3 000 char (15 times) ${NC}"
+
+	for i in {1..15}
+	do
+		echo -n "${Green} [ ${i} ]${NC}"
+		$PATH_TO_CLIENT $p_id "
              .-\"\"\"-.                                     .--..--..--..--..--..--.
             /       \\                                  .' \\  (\`._   (_)     _   \\
             \\       /                                .'    |  '._)         (_)  |
@@ -284,7 +328,10 @@ do
  \\          /    \\           /                                  ||_.-.   ||_.-.
   \`'-------\`      \`--------'\`                                  (_.--__) (_.--__)
 " 
-done
+	done
+fi
+
+
 
 $PATH_TO_CLIENT $pid "ALL TEST FINISHED"
 
