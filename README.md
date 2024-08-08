@@ -1,4 +1,8 @@
-**TODO** when input a huge string more than 20 000, sometimes it stop, not crash or any error, just stop. This is not happen on my own computer, only in hive mac. also test someone else code, has the same problem, so it maybe the machine problem? not sure
+**TODO**
+
+1-when input a huge string more than 20 000, sometimes it stop, not crash or any error, just stop. This is not happen on my own computer, only in hive mac. also test someone else code, has the same problem, so it maybe the machine problem? not sure
+
+2-check the return value of kill and sigaction < 0, printf error info and exit
 
 **Done**
 
