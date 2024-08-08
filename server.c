@@ -55,8 +55,6 @@ int	main(int argc, char **argv)
 	sigaction(SIGUSR1, &sa_server, NULL);
 	sigaction(SIGUSR2, &sa_server, NULL);
 	while (argc == 1)
-	{
 		pause();
-	}
 	return (0);
 }
