@@ -1,4 +1,4 @@
-**TODO** memory check, norm
+**TODO** when input a huge string more than 20 000, sometimes it stop, not crash or any error, just stop. This is not happen on my own computer, only in hive mac. also test someone else code, has the same problem, so it maybe the machine problem? not sure
 
 **Done**
 
