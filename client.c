@@ -26,9 +26,21 @@ void	send_char(int pid, char c)
 	while (bit >= 0)
 	{
 		if (((c >> bit) & 1) == 1)
-			kill(pid, SIGUSR1);
+		{
+			if (kill(pid, SIGUSR1) < 0)
+			{
+				ft_printf("Fail to kill SIGUSR1 from clinet to server.");
+				exit(EXIT_FAILURE);
+			}
+		}
 		else
-			kill(pid, SIGUSR2);
+		{
+			if (kill(pid, SIGUSR2) < 0)
+			{
+				ft_printf("Fail to kill SIGUSR2 from clinet to server.");
+				exit(EXIT_FAILURE);
+			}
+		}
 		pause();
 		bit--;
 	}
@@ -55,21 +67,24 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		ft_printf("Error: Wrong For00mat.\n");
-		ft_printf("Enter: ./client <PID> <string>\n");
-		return (1);
+		ft_printf("Error: Wrong Format. Enter: [./client <PID> <string>]\n");
+		exit(EXIT_FAILURE);
 	}
 	pid = ft_atoi(argv[1]);
 	if (kill(pid, 0) < 0)
 	{
-		ft_printf("Error: Invalid PID.\n");
-		return (1);
+		ft_printf("Error: Invalid PID.");
+		exit(EXIT_FAILURE);
 	}
 	sigemptyset(&sa_client.sa_mask);
 	sa_client.sa_flags = SA_RESTART;
 	sa_client.sa_handler = ack_handler;
-	sigaction(SIGUSR1, &sa_client, NULL);
-	sigaction(SIGUSR2, &sa_client, NULL);
+	if (sigaction(SIGUSR1, &sa_client, NULL) < 0
+		|| sigaction(SIGUSR2, &sa_client, NULL) < 0)
+	{
+		ft_printf("Fail to handle SIGUSR1 in client.");
+		exit(EXIT_FAILURE);
+	}
 	send_message(pid, argv[2]);
-	return (0);
+	return (EXIT_SUCCESS);
 }

@@ -32,8 +32,13 @@ void	signal_handler(int signal, siginfo_t *info, void *context)
 		c = 0;
 		bit = 7;
 	}
-	kill(info->si_pid, SIGUSR1);
+	if (kill(info->si_pid, SIGUSR1) < 0)
+	{
+		ft_printf("Fail to kill signal from server to client.");
+		exit(EXIT_FAILURE);
+	}
 }
+
 
 int	main(int argc, char **argv)
 {
@@ -43,18 +48,21 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 1)
 	{
-		ft_printf("Wrong Format.\n");
-		ft_printf("Enter: ./server\n");
-		return (1);
+		ft_printf("Wrong Format. Enter: [./server]\n");
+		exit(EXIT_FAILURE);
 	}
 	pid = getpid();
 	ft_printf("Server PID: %i\n", pid);
 	sigemptyset(&sa_server.sa_mask);
 	sa_server.sa_sigaction = signal_handler;
 	sa_server.sa_flags = SA_SIGINFO | SA_RESTART;
-	sigaction(SIGUSR1, &sa_server, NULL);
-	sigaction(SIGUSR2, &sa_server, NULL);
-	while (argc == 1)
+	if (sigaction(SIGUSR1, &sa_server, NULL) < 0
+		|| sigaction(SIGUSR2, &sa_server, NULL) < 0)
+	{
+		ft_printf("Fail to handle signal in server.");
+		exit(EXIT_FAILURE);
+	}
+	while (1)
 		pause();
-	return (0);
+	return (EXIT_SUCCESS);
 }

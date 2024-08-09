@@ -2,7 +2,6 @@
 
 PATH_TO_CLIENT="./client"
 
-
 ###################
 # Preparing tests #
 ###################
@@ -23,6 +22,11 @@ do
 	esac
 done
 
+if [[ $t1 == 0 && $t2 == 0 && $t3 == 0 && $t4 == 0 ]]
+then
+  echo "[ERROR] Please enter test No. [-1~4]"
+  exit
+fi
 
 ###########
 # Testing #
@@ -31,30 +35,30 @@ done
 ### Test 1 ###
 if [[ $t1 == 1 ]]
 then
-	echo "[Test 1] Basic test"
-	$PATH_TO_CLIENT $pid "Test 1: Hello, this is a first test" 
+	echo "[Test 1.1] Basic test"
+	$PATH_TO_CLIENT $pid "Test 1.1: Hello, this is a first test" 
 fi
 
 ### Test 2 ###
 if [[ $t1 == 1 ]]
 then
-	echo "[Test 2] Empty string"
+	echo "[Test 1.2] Empty string"
 	$PATH_TO_CLIENT $pid ""
 fi
 
 ### Test 3 ###
 if [[ $t1 == 1 ]]
 then
-	echo "[Test 3] Number string"
-	$PATH_TO_CLIENT $pid "Test 3: 12345678901234567890123456789012345678901234567890"
+	echo "[Test 1.3] Number string"
+	$PATH_TO_CLIENT $pid "Test 1.3: 12345678901234567890123456789012345678901234567890"
 fi
 
 ### Test 4 ###
 if [[ $t1 == 1 ]]
 then
-	echo "[Test 4] Emojis"
+	echo "[Test 1.4] Emojis"
 	$PATH_TO_CLIENT $pid "
-Test 4:
+Test 1.4:
 ⛴️ + 🌊 + 💥 = ❓
 👦 + 👽 + 🚲 = ❓
 🏰 + ❄️ + 👭 = ❓
@@ -64,9 +68,9 @@ fi
 ### Test 5 ###
 if [[ $t2 == 1 ]]
 then
-	echo "[Test 5] Speed test: Time to print 1 000 dot"
+	echo "[Test 2.1] Speed test: Time to print 1 000 dot"
 	time $PATH_TO_CLIENT $pid "
-Test 5:
+Test 2.1:
 ...................................................................................................
 ...................................................................................................
 ...................................................................................................
@@ -81,11 +85,11 @@ Test 5:
 fi
 
 ### Test 6 ###
-if [[ $t3 == 1 ]]
+if [[ $t2 == 1 ]]
 then
-	echo "[Test 6] Speed test: Time to print 3 000 char"
+	echo "[Test 2.2] Speed test: Time to print 3 000 char"
 	time $PATH_TO_CLIENT $pid "
-Test 6:
+Test 2.2:
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mattis ullamcorper venenatis.
 Curabitur auctor lectus sed ligula vehicula, eget blandit mauris commodo. Aliquam tempor pellentesque
 faucibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
@@ -129,11 +133,11 @@ ante ac magna fringilla sodales. Praesent molestie justo dui, eu hendrerit nisi 
 fi
 
 ### Test 7 ###
-if [[ $t4 == 1 ]]
+if [[ $t3 == 1 ]]
 then
-	echo "[Test 7] Crash test: Sending big str with 20 000 char"
+	echo "[Test 3] Crash test: Sending big str with 20 000 char"
 	$PATH_TO_CLIENT $pid "
-Test 7:
+Test 3:
                                                LL             A
                                                LL            A A
                                                LL           AA AA
@@ -296,42 +300,6 @@ TTTTTTTT  OOOOOOOOO  UU     UU  RRRRRRRR             EEEEEEEEE  IIIIIIIIII  FFFF
  -----------------------------------------------------------------------------------------------------------------                        
 "
 fi
-
-### Test 4 ###
-if [[ $t4 == 1 ]]
-then
-	echo "${L_Green}\n [Test 4]\tTrying to crash your exhange Server-Client, sending str with 3 000 char (15 times) ${NC}"
-
-	for i in {1..15}
-	do
-		echo -n "${Green} [ ${i} ]${NC}"
-		$PATH_TO_CLIENT $p_id "
-             .-\"\"\"-.                                     .--..--..--..--..--..--.
-            /       \\                                  .' \\  (\`._   (_)     _   \\
-            \\       /                                .'    |  '._)         (_)  |
-     .-\"\"\"-.-\`.-.-.<  _                              \\ _.')\\      .----..---.   /
-    /      _,-\\ O_O-_/ )                             |(_.'  |    /    .-\\-.  \\  |
-    \\     / ,  \`   . \`|                              \\     0|    |   ( O| O) | o|
-     '-..-| \\-.,__~ ~ /                               |  _  |  .--.____.'._.-.  |
-           \\ \`-.__/  /                                \\ (_) | o         -\` .-\`  |
-          / \`-.__.-\\\`-._    ,\",                        |    \\   |\`-._ _ _ _ _\\ /
-         / /|    ___\\-._\`-.;  , .----.                 \\    |   |  \`. |_||_|   |
-        ( ( |.-\"\`   \`'\\ '-(     -.---'                 | o  |    \\_      \\     |     -.   .-.
-         \\ \\/    {}{}  |   \\.__.-'                     |.-.  \\     \`--..-'   O |     \`.\`-' .'
-          \\|           /                             _.'  .' |     \`-.-'      /-.__   ' .-'
-           \\        , /                            .' \`-.\` '.|='=.='=.='=.='=|._/_ \`-'.'
-           ( __\`;-;'__\`)                           \`-._  \`.  |________/\\_____|    \`-.'
-           \`//'\`   \`||\`                               .'   ).| '=' '='\\/ '=' |
-          _//       ||                                \`._.\`  '---------------'
-  .-\"-._,(__)     .(__).-\"\"-.                                 //___\\   //___\\
- /          \\    /           \\                                  ||       ||
- \\          /    \\           /                                  ||_.-.   ||_.-.
-  \`'-------\`      \`--------'\`                                  (_.--__) (_.--__)
-" 
-	done
-fi
-
-
 
 $PATH_TO_CLIENT $pid "ALL TEST FINISHED"
 

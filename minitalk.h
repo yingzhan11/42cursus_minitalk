@@ -16,5 +16,6 @@
 # include "./libft/libft.h"
 # include "./libft/ft_printf/ft_printf.h"
 # include <signal.h>
+# include <stdlib.h>
 
 #endif
