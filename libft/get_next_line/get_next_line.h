@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 12:51:48 by yzhan             #+#    #+#             */
-/*   Updated: 2024/08/15 14:07:55 by yzhan            ###   ########.fr       */
+/*   Created: 2024/06/03 11:16:18 by yzhan             #+#    #+#             */
+/*   Updated: 2024/06/05 14:56:23 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-# include "./libft/libft.h"
-# include "./libft/ft_printf/ft_printf.h"
-# include <signal.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
+
 # include <stdlib.h>
-# include <stdbool.h>
+# include <unistd.h>
 
-# define TIMEOUT 10000000
-
-typedef struct s_client
-{
-	int	signal;
-	int	pid;
-}	t_client;
-
-void	error_exit(char *info);
+char	*get_next_line(int fd);
+char	*ft_free(char **str);
+char	*ft_gnl_strchr(const char *s, int c);
+char	*ft_gnl_strjoin(char *s1, const char *s2);
+size_t	ft_gnl_strlen(const char *s, char c);
+char	*ft_gnl_substr(char const *src, unsigned int start, size_t len);
 
 #endif

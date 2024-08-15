@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 12:51:48 by yzhan             #+#    #+#             */
-/*   Updated: 2024/08/15 14:07:55 by yzhan            ###   ########.fr       */
+/*   Created: 2024/04/22 11:09:28 by yzhan             #+#    #+#             */
+/*   Updated: 2024/05/01 13:22:28 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include "./libft/ft_printf/ft_printf.h"
-# include <signal.h>
-# include <stdlib.h>
-# include <stdbool.h>
-
-# define TIMEOUT 10000000
-
-typedef struct s_client
+char	*ft_strdup(const char *s1)
 {
-	int	signal;
-	int	pid;
-}	t_client;
+	int		length;
+	int		i;
+	char	*dst;
 
-void	error_exit(char *info);
-
-#endif
+	length = 0;
+	i = 0;
+	while (s1[length] != '\0')
+		length++;
+	dst = (char *)malloc((length + 1) * sizeof(char));
+	if (dst == NULL)
+		return (NULL);
+	while (s1[i] != 0)
+	{
+		dst[i] = s1[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}

@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 12:51:48 by yzhan             #+#    #+#             */
-/*   Updated: 2024/08/15 14:07:55 by yzhan            ###   ########.fr       */
+/*   Created: 2024/04/16 15:30:34 by yzhan             #+#    #+#             */
+/*   Updated: 2024/04/23 14:30:16 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include "./libft/ft_printf/ft_printf.h"
-# include <signal.h>
-# include <stdlib.h>
-# include <stdbool.h>
-
-# define TIMEOUT 10000000
-
-typedef struct s_client
+char	*ft_strrchr(const char *s, int c)
 {
-	int	signal;
-	int	pid;
-}	t_client;
+	char	chr;
+	int		i;
 
-void	error_exit(char *info);
-
-#endif
+	chr = c;
+	i = ft_strlen(s);
+	while (i > 0 && s[i] != chr)
+		i--;
+	if (s[i] == chr)
+		return ((char *)(s + i));
+	return (NULL);
+}

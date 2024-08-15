@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 12:51:48 by yzhan             #+#    #+#             */
-/*   Updated: 2024/08/15 14:07:55 by yzhan            ###   ########.fr       */
+/*   Created: 2024/04/24 16:34:24 by yzhan             #+#    #+#             */
+/*   Updated: 2024/04/24 17:25:25 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include "./libft/ft_printf/ft_printf.h"
-# include <signal.h>
-# include <stdlib.h>
-# include <stdbool.h>
-
-# define TIMEOUT 10000000
-
-typedef struct s_client
+void	ft_putchar_fd(char c, int fd)
 {
-	int	signal;
-	int	pid;
-}	t_client;
-
-void	error_exit(char *info);
-
-#endif
+	write(fd, &c, 1);
+}

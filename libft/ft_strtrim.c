@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 12:51:48 by yzhan             #+#    #+#             */
-/*   Updated: 2024/08/15 14:07:55 by yzhan            ###   ########.fr       */
+/*   Created: 2024/04/23 14:31:11 by yzhan             #+#    #+#             */
+/*   Updated: 2024/04/23 15:51:05 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include "./libft/ft_printf/ft_printf.h"
-# include <signal.h>
-# include <stdlib.h>
-# include <stdbool.h>
-
-# define TIMEOUT 10000000
-
-typedef struct s_client
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	int	signal;
-	int	pid;
-}	t_client;
+	int		i;
+	int		j;
+	char	*trim_s;
 
-void	error_exit(char *info);
-
-#endif
+	if (!s1 || !set)
+		return ((char *)s1);
+	i = 0;
+	while (s1[i] != 0 && ft_strchr(set, s1[i]) != NULL)
+		i++;
+	j = ft_strlen(s1) - 1;
+	while (j > 0 && ft_strchr(set, s1[j]) != NULL)
+		j--;
+	trim_s = ft_substr(s1, i, (j - i + 1));
+	return (trim_s);
+}

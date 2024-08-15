@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 12:51:48 by yzhan             #+#    #+#             */
-/*   Updated: 2024/08/15 14:07:55 by yzhan            ###   ########.fr       */
+/*   Created: 2024/04/19 15:27:10 by yzhan             #+#    #+#             */
+/*   Updated: 2024/04/19 16:23:24 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include "./libft/ft_printf/ft_printf.h"
-# include <signal.h>
-# include <stdlib.h>
-# include <stdbool.h>
-
-# define TIMEOUT 10000000
-
-typedef struct s_client
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	int	signal;
-	int	pid;
-}	t_client;
+	size_t	srcsize;
+	size_t	i;
+	size_t	j;
 
-void	error_exit(char *info);
-
-#endif
+	srcsize = ft_strlen(src);
+	i = ft_strlen(dst);
+	j = 0;
+	if (dstsize <= i)
+		return (dstsize + srcsize);
+	while (src[j] != '\0' && j < (dstsize - i - 1))
+	{
+		dst[i + j] = src[j];
+		j++;
+	}
+	dst[i + j] = '\0';
+	return (i + srcsize);
+}

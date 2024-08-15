@@ -68,7 +68,7 @@ fi
 ### Test 5 ###
 if [[ $t2 == 1 ]]
 then
-	echo "[Test 2.1] Speed test: Time to print 1 000 dot"
+	echo "[Test 2] Speed test: Time to print 1 000 dot"
 	time $PATH_TO_CLIENT $pid "
 Test 2.1:
 ...................................................................................................
@@ -85,9 +85,9 @@ Test 2.1:
 fi
 
 ### Test 6 ###
-if [[ $t2 == 1 ]]
+if [[ $t3 == 1 ]]
 then
-	echo "[Test 2.2] Speed test: Time to print 3 000 char"
+	echo "[Test 3] Speed test: Time to print 3 000 char"
 	time $PATH_TO_CLIENT $pid "
 Test 2.2:
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mattis ullamcorper venenatis.
@@ -133,7 +133,7 @@ ante ac magna fringilla sodales. Praesent molestie justo dui, eu hendrerit nisi 
 fi
 
 ### Test 7 ###
-if [[ $t3 == 1 ]]
+if [[ $t4 == 1 ]]
 then
 	echo "[Test 3] Crash test: Sending big str with 20 000 char"
 	$PATH_TO_CLIENT $pid "
@@ -301,7 +301,4 @@ TTTTTTTT  OOOOOOOOO  UU     UU  RRRRRRRR             EEEEEEEEE  IIIIIIIIII  FFFF
 "
 fi
 
-$PATH_TO_CLIENT $pid "ALL TEST FINISHED"
-
-echo ""
 echo "If all was corrrectly display on your server terminal: Perfect, well done! 💪"

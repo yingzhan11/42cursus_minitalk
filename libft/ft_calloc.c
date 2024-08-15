@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 12:51:48 by yzhan             #+#    #+#             */
-/*   Updated: 2024/08/15 14:07:55 by yzhan            ###   ########.fr       */
+/*   Created: 2024/04/22 10:20:54 by yzhan             #+#    #+#             */
+/*   Updated: 2024/04/22 16:55:10 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include "./libft/ft_printf/ft_printf.h"
-# include <signal.h>
-# include <stdlib.h>
-# include <stdbool.h>
-
-# define TIMEOUT 10000000
-
-typedef struct s_client
+void	*ft_calloc(size_t count, size_t size)
 {
-	int	signal;
-	int	pid;
-}	t_client;
+	void	*p;
+	size_t	total;
 
-void	error_exit(char *info);
-
-#endif
+	total = count * size;
+	if (count > 0 && size > 0 && ((total / count) != size))
+		return (NULL);
+	p = (void *)malloc(total);
+	if (!p)
+		return (NULL);
+	ft_bzero(p, total);
+	return (p);
+}
