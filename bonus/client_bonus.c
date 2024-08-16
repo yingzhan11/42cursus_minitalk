@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 12:45:49 by yzhan             #+#    #+#             */
-/*   Updated: 2024/08/15 14:06:04 by yzhan            ###   ########.fr       */
+/*   Created: 2024/08/16 14:53:16 by yzhan             #+#    #+#             */
+/*   Updated: 2024/08/16 14:53:20 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static int	g_ack;
 
@@ -79,13 +79,21 @@ int	main(int argc, char **argv)
 	if (argc != 3)
 		error_exit("Error: Wrong Format. Enter: [./client <PID> <string>]");
 	signal(SIGUSR1, &ack_handler);
+	signal(SIGUSR2, &ack_handler);
 	pid = ft_atoi(argv[1]);
 	msg_len = ft_strlen(argv[2]) + 1;
-	ft_printf("Message length: %i\n", (msg_len - 1));
+	ft_printf("[Message length: %i]\n", (msg_len - 1));
 	if (kill(pid, 0) < 0)
 		error_exit("Error: Invalid PID.");
 	send(pid, &msg_len, sizeof(msg_len));
 	send(pid, argv[2], msg_len);
 	ft_printf("Finish sending.\n");
+	while (g_ack != SIGUSR2)
+	{
+		usleep(TIMEOUT);
+		if (!g_ack)
+			error_exit("Time out: ack signal from server may missing.");
+	}
+	ft_printf("Server already receive message.\n");
 	return (0);
 }

@@ -30,7 +30,7 @@ PTF_SRC = ft_printf.c ft_print_char.c ft_print_digit.c ft_print_pointer.c
 PTF_OBJ = $(addprefix $(PTF_DIR)/, $(PTF_SRC:.c=.o))
 
 %.o : %.c
-	@cc $(FLAGS) -c $< -o $@
+	@cc $(FLAGS) -c $< -o $@ && printf "Compiling: $(notdir $<)\n"
 
 all: $(NAME)
 

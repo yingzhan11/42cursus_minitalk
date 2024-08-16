@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yzhan <yzhan@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 12:52:43 by yzhan             #+#    #+#             */
-/*   Updated: 2024/08/16 09:19:10 by yzhan            ###   ########.fr       */
+/*   Created: 2024/08/16 14:53:30 by yzhan             #+#    #+#             */
+/*   Updated: 2024/08/16 14:53:33 by yzhan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static t_client	g_client_info;
 
@@ -86,7 +86,7 @@ void	receive_print_message(int msg_len)
 {
 	char	*message;
 
-	message = (char *)malloc(sizeof(char) * msg_len);
+	message = (char *)malloc(sizeof(char) * (msg_len));
 	if (!message)
 	{
 		ft_printf("Fail to malloc message.\n");
@@ -95,8 +95,9 @@ void	receive_print_message(int msg_len)
 	message[msg_len - 1] = '\0';
 	if (receive_signal(message, msg_len) == true)
 	{
-		ft_printf("Message length: %i\n", (msg_len - 1));
+		ft_printf("[Message length: %i]\n", (msg_len - 1));
 		ft_printf("[Message:%s]\n", message);
+		kill(g_client_info.pid, SIGUSR2);
 	}
 	else
 		ft_printf("Timeout: signal from client may missing.\n");

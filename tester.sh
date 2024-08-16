@@ -1,6 +1,6 @@
 !/bin/zsh
 
-PATH_TO_CLIENT="./client"
+PATH_TO_CLIENT="./client_bonus"
 
 ###################
 # Preparing tests #
