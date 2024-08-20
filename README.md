@@ -1,4 +1,14 @@
-**TODO**
+# useful reference
+
+1- sending and handling signal in C https://www.youtube.com/watch?v=83M5-NPDeWs
+
+2- Unix signal https://www.cs.kent.edu/~ruttan/sysprog/lectures/signals.html
+
+3- wiki for this project https://github.com/mlanca-c/Minitalk/wiki (very useful)
+
+# some tips
+
+
 
 1-when input a huge string more than 20 000, sometimes it stop, not crash or any error, just stop. This is not happen on my own computer, only in hive mac. also test someone else code, has the same problem, so it maybe the machine problem? not sure
 
