@@ -55,13 +55,13 @@ int	send_byte(int pid, char c)
 }
 
 /*Fuction to send msg to receiver*/
-void	send(pid_t pid, void *str, int str_len)
+void	send(pid_t pid, void *str, int msg_len)
 {
 	int		i;
 	char	byte_to_send;
 
 	i = 0;
-	while (i < str_len)
+	while (i < msg_len)
 	{
 		byte_to_send = ((char *)str)[i];
 		if (send_byte(pid, byte_to_send) == -1)
